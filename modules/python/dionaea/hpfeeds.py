@@ -330,9 +330,11 @@ class hpfeedihandler(ihandler):
 
     def connection_publish(self, icd, con_type):
         try:
+            tstamp = timestr()
             con=icd.con
             self.client.publish(
                 CONNCHAN,
+                time=tstamp,
                 connection_type=con_type,
                 connection_transport=con.transport,
                 connection_protocol=con.protocol,
@@ -437,8 +439,10 @@ class hpfeedihandler(ihandler):
             return
         logger.debug('dcerpc request, publishing uuid {0}, opnum {1}'.format(i.uuid, i.opnum))
         try:
+            tstamp = timestr()
             self.client.publish(
                 DCECHAN,
+                time=tstamp,
                 uuid=i.uuid,
                 opnum=i.opnum,
                 saddr=i.con.remote.host,
